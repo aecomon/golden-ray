@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Золотой Луч Внимания — Руководство для гида</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+	--cream:#FDF8F0;
+	--warm:#F5EDE0;
+	--sand:#E8DDD0;
+	--gold:#C4960A;
+	--gold-light:#D4A017;
+	--gold-soft:rgba(196,150,10,0.1);
+	--gold-border:rgba(196,150,10,0.25);
+	--brown:#5C4A2A;
+	--brown-light:#7A6642;
+	--text:#3A3226;
+	--text-mid:#6B5D4D;
+	--text-light:#9B8E7E;
+	--white:#FFFFFF;
+	--red-soft:#D94F4F;
+	--red-bg:rgba(217,79,79,0.06);
+	--red-border:rgba(217,79,79,0.2);
+	--green-soft:#4A8C5C;
+	--green-bg:rgba(74,140,92,0.06);
+	--green-border:rgba(74,140,92,0.2);
+	--blue-bg:rgba(70,130,180,0.06);
+	--blue-border:rgba(70,130,180,0.2);
+	--purple-bg:rgba(120,80,160,0.06);
+	--purple-border:rgba(120,80,160,0.2);
+	--todo-bg:rgba(255,180,0,0.08);
+	--todo-border:rgba(255,180,0,0.4);
+	--radius:16px;
+	--radius-sm:10px;
+	--shadow:0 2px 20px rgba(92,74,42,0.06);
+	--shadow-lg:0 8px 40px rgba(92,74,42,0.08);
+}
+
+html{scroll-behavior:smooth}
+body{
+	font-family:Georgia,'Times New Roman',serif;
+	background:var(--cream);
+	color:var(--text);
+	line-height:1.85;
+	overflow-x:hidden;
+}
+
+/* === TYPOGRAPHY === */
+h1,h2,h3,h4{font-family:'Segoe UI',Arial,sans-serif;line-height:1.3;color:var(--brown)}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:300;letter-spacing:-0.5px}
+h2{font-size:clamp(1.4rem,3.5vw,2rem);font-weight:400}
+h3{font-size:clamp(1.05rem,2.5vw,1.35rem);font-weight:600}
+p{margin-bottom:12px}
+p:last-child{margin-bottom:0}
+strong{color:var(--brown)}
+em{color:var(--text-mid)}
+
+/* === LAYOUT === */
+.container{max-width:880px;margin:0 auto;padding:0 24px}
+
+/* === HERO === */
+.hero{
+	min-height:80vh;
+	display:flex;flex-direction:column;
+	align-items:center;justify-content:center;
+	text-align:center;padding:80px 24px 60px;
+	position:relative;
+	background:linear-gradient(180deg,var(--white) 0%,var(--cream) 100%);
+}
+.hero::after{
+	content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;
+	background:linear-gradient(90deg,transparent,var(--gold-border),transparent);
+}
+.hero-icon{
+	width:90px;height:90px;margin-bottom:28px;
+	animation:glow 4s ease-in-out infinite;
+}
+@keyframes glow{
+	0%,100%{filter:drop-shadow(0 0 8px rgba(196,150,10,0.3))}
+	50%{filter:drop-shadow(0 0 24px rgba(196,150,10,0.6))}
+}
+.hero-label{
+	display:inline-flex;align-items:center;gap:6px;
+	background:var(--gold-soft);border:1px solid var(--gold-border);
+	border-radius:20px;padding:6px 18px;
+	font-family:'Segoe UI',Arial,sans-serif;
+	font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;
+	color:var(--gold);margin-bottom:20px;
+}
+.hero h1{color:var(--brown);margin-bottom:12px}
+.hero h1 span{color:var(--gold)}
+.hero-sub{font-size:1.1rem;color:var(--text-mid);max-width:560px;margin:0 auto 16px;font-style:italic}
+.hero-desc{font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;color:var(--text-light);max-width:620px;margin:0 auto 32px;line-height:1.7}
+.hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.hero-meta span{
+	display:flex;align-items:center;gap:6px;
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.85rem;color:var(--text-mid);
+}
+
+/* === NAV / TOC === */
+.toc{
+	position:sticky;top:0;z-index:100;
+	background:rgba(253,248,240,0.95);
+	backdrop-filter:blur(12px);
+	border-bottom:1px solid var(--sand);
+	padding:12px 0;
+}
+.toc-inner{
+	display:flex;align-items:center;gap:6px;
+	max-width:880px;margin:0 auto;padding:0 24px;
+	overflow-x:auto;scrollbar-width:none;
+}
+.toc-inner::-webkit-scrollbar{display:none}
+.toc-btn{
+	flex-shrink:0;padding:7px 14px;border-radius:20px;
+	border:1px solid transparent;background:transparent;
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.73rem;
+	color:var(--text-mid);cursor:pointer;transition:all 0.25s;
+	white-space:nowrap;
+}
+.toc-btn:hover{background:var(--gold-soft);color:var(--brown)}
+.toc-btn.active{background:var(--gold-soft);border-color:var(--gold-border);color:var(--gold)}
+
+/* === SECTION === */
+.section{padding:48px 0;border-bottom:1px solid var(--sand)}
+.section:last-of-type{border-bottom:none}
+
+/* === CARDS === */
+.card{
+	background:var(--white);
+	border:1px solid var(--sand);
+	border-radius:var(--radius);
+	padding:36px 32px;
+	box-shadow:var(--shadow);
+	margin-bottom:28px;
+}
+.card-badge{
+	display:inline-flex;align-items:center;gap:6px;
+	background:var(--gold-soft);border:1px solid var(--gold-border);
+	border-radius:var(--radius-sm);padding:5px 14px;
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.68rem;
+	letter-spacing:2px;text-transform:uppercase;
+	color:var(--gold);margin-bottom:14px;
+}
+.card-title{margin-bottom:6px}
+.card-location{font-family:'Segoe UI',Arial,sans-serif;font-size:0.82rem;color:var(--text-light);margin-bottom:8px}
+.card-time{
+	display:inline-flex;align-items:center;gap:5px;
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.76rem;
+	color:var(--gold);background:var(--gold-soft);
+	border-radius:8px;padding:4px 12px;margin-bottom:18px;
+}
+
+/* === TABS === */
+.tabs{display:flex;gap:6px;margin:20px 0 0;flex-wrap:wrap}
+.tab-btn{
+	padding:8px 18px;border-radius:var(--radius-sm);
+	border:1px solid var(--sand);background:var(--cream);
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.8rem;
+	color:var(--text-mid);cursor:pointer;transition:all 0.25s;
+}
+.tab-btn:hover{border-color:var(--gold-border);color:var(--brown)}
+.tab-btn.active{background:var(--gold-soft);border-color:var(--gold-border);color:var(--gold);font-weight:600}
+.tab-panel{display:none;padding:24px 0 0;animation:fadeIn 0.3s ease}
+.tab-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* === SPEECH BUBBLE (Слова гида) === */
+.speech{
+	background:var(--gold-soft);
+	border-left:4px solid var(--gold);
+	border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+	padding:22px 26px;margin:16px 0;
+	position:relative;
+}
+.speech-label{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.63rem;
+	letter-spacing:3px;text-transform:uppercase;
+	color:var(--gold);margin-bottom:10px;
+	display:flex;align-items:center;gap:6px;
+}
+.speech p{font-size:0.95rem;line-height:1.9}
+
+/* === HISTORY BLOCK === */
+.history{
+	background:var(--blue-bg);
+	border:1px solid var(--blue-border);
+	border-radius:var(--radius-sm);
+	padding:22px 26px;margin:16px 0;
+}
+.history-label{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.63rem;
+	letter-spacing:3px;text-transform:uppercase;
+	color:steelblue;margin-bottom:10px;
+	display:flex;align-items:center;gap:6px;
+}
+.history p{font-size:0.92rem;line-height:1.9}
+
+/* === EXERCISE === */
+.exercise{
+	background:var(--green-bg);
+	border:2px solid var(--green-border);
+	border-radius:var(--radius);
+	padding:26px;margin:16px 0;
+}
+.exercise-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.exercise-icon{
+	width:44px;height:44px;border-radius:12px;flex-shrink:0;
+	background:linear-gradient(135deg,var(--green-soft),#6aad7a);
+	display:flex;align-items:center;justify-content:center;
+	font-size:1.3rem;color:white;
+}
+.exercise-title{font-family:'Segoe UI',Arial,sans-serif;font-size:1.05rem;color:var(--green-soft);margin-bottom:2px}
+.exercise-sub{font-family:'Segoe UI',Arial,sans-serif;font-size:0.78rem;color:var(--text-mid)}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px}
+.steps li{display:flex;align-items:flex-start;gap:12px;font-size:0.92rem;line-height:1.7}
+.step-num{
+	width:24px;height:24px;border-radius:50%;flex-shrink:0;
+	background:var(--green-soft);color:white;
+	display:flex;align-items:center;justify-content:center;
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;font-weight:700;
+	margin-top:3px;
+}
+
+/* === SHARING/REFLECTION === */
+.sharing{
+	background:var(--purple-bg);
+	border:1px dashed var(--purple-border);
+	border-radius:var(--radius-sm);
+	padding:18px 22px;margin:16px 0;
+}
+.sharing-label{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.63rem;
+	letter-spacing:2px;text-transform:uppercase;
+	color:#7850A0;margin-bottom:10px;
+	display:flex;align-items:center;gap:6px;
+}
+.sharing-q{font-size:0.95rem;color:var(--brown);font-style:italic;margin-bottom:6px}
+.sharing-hint{font-family:'Segoe UI',Arial,sans-serif;font-size:0.84rem;color:var(--text-mid);line-height:1.7}
+
+/* === RISK BLOCK === */
+.risk{
+	background:var(--red-bg);
+	border:1px solid var(--red-border);
+	border-radius:var(--radius-sm);
+	padding:20px 24px;margin:14px 0;
+}
+.risk-title{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;
+	color:var(--red-soft);font-weight:600;margin-bottom:8px;
+	display:flex;align-items:center;gap:8px;
+}
+.risk p{font-size:0.88rem;line-height:1.7}
+.risk-solution{
+	background:var(--green-bg);
+	border:1px solid var(--green-border);
+	border-radius:8px;padding:14px 18px;margin-top:10px;
+}
+.risk-solution strong{color:var(--green-soft)}
+
+/* === PLAN B === */
+.planb{
+	background:rgba(70,130,180,0.05);
+	border:1px solid rgba(70,130,180,0.2);
+	border-radius:var(--radius-sm);
+	padding:20px 24px;margin:14px 0;
+}
+.planb-title{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;
+	color:steelblue;font-weight:600;margin-bottom:8px;
+	display:flex;align-items:center;gap:8px;
+}
+
+/* === BRIDGE (Мост в жизнь) === */
+.bridge{
+	background:linear-gradient(135deg,var(--gold-soft),rgba(196,150,10,0.04));
+	border:1px solid var(--gold-border);
+	border-radius:var(--radius-sm);
+	padding:20px 24px;margin:16px 0;
+}
+.bridge-label{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.63rem;
+	letter-spacing:3px;text-transform:uppercase;
+	color:var(--gold);margin-bottom:10px;
+	display:flex;align-items:center;gap:6px;
+}
+
+/* === TODO PLACEHOLDER === */
+.todo{
+	background:var(--todo-bg);
+	border:2px dashed var(--todo-border);
+	border-radius:var(--radius-sm);
+	padding:16px 20px;margin:14px 0;
+	font-family:'Segoe UI',Arial,sans-serif;
+	font-size:0.85rem;color:#B8860B;
+}
+.todo::before{content:'⚠️ ';font-size:1rem}
+
+/* === INFO GRID === */
+.info-grid{
+	display:grid;
+	grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+	gap:14px;margin:18px 0;
+}
+.info-item{
+	background:var(--cream);
+	border:1px solid var(--sand);
+	border-radius:var(--radius-sm);
+	padding:18px;text-align:center;
+	transition:transform 0.2s;
+}
+.info-item:hover{transform:translateY(-2px)}
+.info-item-icon{font-size:1.8rem;margin-bottom:8px}
+.info-item-title{font-family:'Segoe UI',Arial,sans-serif;font-size:0.87rem;color:var(--brown);margin-bottom:4px;font-weight:600}
+.info-item-desc{font-family:'Segoe UI',Arial,sans-serif;font-size:0.76rem;color:var(--text-mid);line-height:1.5}
+
+/* === BOOKS === */
+.books{
+	background:var(--cream);border:1px solid var(--sand);
+	border-radius:var(--radius-sm);padding:22px 26px;margin:18px 0;
+}
+.books-label{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.63rem;
+	letter-spacing:3px;text-transform:uppercase;
+	color:var(--gold);margin-bottom:12px;
+}
+.book-row{
+	display:flex;align-items:flex-start;gap:10px;
+	margin-bottom:10px;font-family:'Segoe UI',Arial,sans-serif;font-size:0.85rem;line-height:1.6;
+}
+.book-row:last-child{margin-bottom:0}
+.book-row span:first-child{font-size:1.1rem;flex-shrink:0}
+
+/* === DIVIDER === */
+.divider{
+	display:flex;align-items:center;gap:14px;margin:28px 0;
+}
+.divider-line{flex:1;height:1px;background:var(--sand)}
+.divider-dot{color:var(--gold);font-size:0.9rem}
+
+/* === QUOTE === */
+.quote{
+	background:var(--gold-soft);
+	border:1px solid var(--gold-border);
+	border-radius:var(--radius-sm);
+	padding:24px 28px;margin:18px 0;
+	font-style:italic;font-size:1.02rem;
+	color:var(--brown);text-align:center;
+	position:relative;
+}
+.quote::before{
+	content:'❝';font-size:2.2rem;color:var(--gold);
+	opacity:0.25;position:absolute;top:-6px;left:16px;
+}
+
+/* === TIMELINE === */
+.timeline-label{
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;
+	color:var(--gold);font-weight:600;
+	background:var(--gold-soft);
+	border-radius:6px;padding:3px 10px;
+	display:inline-block;margin-bottom:10px;
+}
+
+/* === PRINTABLE CARDS (Шпаргалка / Закладка) === */
+.print-card{
+	background:var(--white);
+	border:2px solid var(--gold-border);
+	border-radius:var(--radius);
+	padding:32px 28px;margin:20px 0;
+	box-shadow:var(--shadow-lg);
+	position:relative;
+	overflow:hidden;
+	page-break-inside:avoid;
+}
+.print-card::before{
+	content:'';position:absolute;top:0;left:0;right:0;height:4px;
+	background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));
+}
+.print-card-title{
+	font-family:'Segoe UI',Arial,sans-serif;
+	font-size:1.1rem;color:var(--gold);
+	text-transform:uppercase;letter-spacing:2px;
+	margin-bottom:18px;text-align:center;
+}
+.print-card-side{
+	font-family:'Segoe UI',Arial,sans-serif;
+	font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;
+	color:var(--text-light);margin:20px 0 12px;
+	padding-top:16px;border-top:1px dashed var(--sand);
+}
+.print-card-item{
+	display:flex;gap:14px;align-items:flex-start;
+	margin-bottom:14px;font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;line-height:1.6;
+}
+.print-card-item:last-child{margin-bottom:0}
+.print-card-item strong{color:var(--brown);display:block;margin-bottom:2px}
+.print-card-num{
+	width:28px;height:28px;border-radius:50%;flex-shrink:0;
+	background:var(--gold-soft);border:1px solid var(--gold-border);
+	display:flex;align-items:center;justify-content:center;
+	font-weight:700;font-size:0.8rem;color:var(--gold);
+}
+.print-actions{display:flex;gap:10px;justify-content:center;margin-top:18px}
+.print-btn{
+	padding:10px 22px;border-radius:var(--radius-sm);
+	border:1px solid var(--gold-border);background:var(--gold-soft);
+	font-family:'Segoe UI',Arial,sans-serif;font-size:0.82rem;
+	color:var(--gold);cursor:pointer;transition:0.25s;
+}
+.print-btn:hover{background:var(--gold);color:var(--white)}
+
+/* === SCROLL TOP === */
+#scrollTop{
+	position:fixed;bottom:26px;right:26px;
+	width:42px;height:42px;border-radius:50%;
+	background:var(--white);border:1px solid var(--sand);
+	box-shadow:var(--shadow);color:var(--gold);
+	font-size:1.1rem;cursor:pointer;
+	opacity:0;transition:0.3s;z-index:999;
+	display:flex;align-items:center;justify-content:center;
+}
+#scrollTop.show{opacity:1}
+
+/* === FADE IN === */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* === RESPONSIVE === */
+@media(max-width:640px){
+	.card{padding:24px 18px}
+	.exercise{padding:20px 16px}
+	.tabs{gap:4px}
+	.tab-btn{padding:6px 12px;font-size:0.74rem}
+	.info-grid{grid-template-columns:1fr}
+	.hero{min-height:auto;padding:50px 20px 40px}
+	.print-card{padding:24px 18px}
+}
+
+/* === PRINT === */
+@media print{
+	.toc,#scrollTop,.tabs,.print-actions{display:none!important}
+	body{background:#fff!important;color:#000!important;font-size:11pt}
+	.card,.exercise,.speech,.history,.sharing,.risk,.planb,.bridge,.todo,.books,.print-card{
+		box-shadow:none!important;border:1px solid #ccc!important;
+		background:#fff!important;break-inside:avoid;
+	}
+	.section{border-bottom:1px solid #ddd;padding:24px 0}
+}
+.fade-in { opacity: 1 !important; transform: none !important; }
+</style>
+</head>
+<body>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ======================== -->
+<!-- HERO -->
+<!-- ======================== -->
+<section class="hero">
+	<div class="hero-icon">
+		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="50" cy="50" r="44" stroke="#C4960A" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.4"/>
+			<circle cx="50" cy="50" r="30" stroke="#C4960A" stroke-width="0.7" opacity="0.25" fill="none"/>
+			<circle cx="50" cy="50" r="8" fill="#C4960A" opacity="0.8"/>
+			<line x1="50" y1="6" x2="50" y2="22" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+			<line x1="50" y1="78" x2="50" y2="94" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+			<line x1="6" y1="50" x2="22" y2="50" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+			<line x1="78" y1="50" x2="94" y2="50" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+		</svg>
+	</div>
+	<div class="hero-label">✦ Методическое руководство для гида ✦</div>
+	<h1><span>Золотой Луч</span><br>Внимания</h1>
+	<p class="hero-sub">Осознанная прогулка · walk & talk</p>
+	<p class="hero-desc">Полный сценарий с историческими справками, упражнениями, словами ведущего, рисками, планами Б и рекомендациями по андрагогике</p>
+	<div class="hero-meta">
+		<span>⏱ 120 минут</span>
+		<span>📍 6 точек</span>
+		<span>🚶 ~3 км</span>
+		<span>🧠 6 упражнений</span>
+		<span>🎯 78 мин работа + 42 мин переходы</span>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- TOC (Навигация) -->
+<!-- ======================== -->
+<nav class="toc">
+	<div class="toc-inner">
+		<button class="toc-btn active" data-sec="management">Управление</button>
+		<button class="toc-btn" data-sec="point1">🚇 Метро</button>
+		<button class="toc-btn" data-sec="point2">🚀 Гагарин</button>
+		<button class="toc-btn" data-sec="point3">🧠 РАН</button>
+		<button class="toc-btn" data-sec="point4">🌿 Сад</button>
+		<button class="toc-btn" data-sec="point5">🦉 ЧГК</button>
+		<button class="toc-btn" data-sec="point6">🌉 Мост</button>
+		<button class="toc-btn" data-sec="appendix">🆘 План Б</button>
+		<button class="toc-btn" data-sec="methodologist">🧠 Методолог</button>
+		<button class="toc-btn" data-sec="printables">🖨 Печать</button>
+	</div>
+</nav>
+
+<!-- ======================== -->
+<!-- БЛОК 1: УПРАВЛЕНИЕ ГРУППОЙ -->
+<!-- ======================== -->
+<section class="section fade-in" id="management">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📋 Блок 1</div>
+			<h2 class="card-title">Управление группой: риски и решения</h2>
+			<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.9rem;color:var(--text-mid);margin-bottom:22px;">
+				Гид должен помнить: перед ним взрослые, состоявшиеся люди. Их нельзя поучать. Мы используем подход <strong>андрагогики</strong> (обучение взрослых через их собственный опыт).
+			</p>
+
+			<!-- Риск 1 -->
+			<div class="risk">
+				<div class="risk-title">🛑 Риск 1: Скепсис и споры</div>
+				<p>«Это антинаучно», «Я многозадачен и мне норм».</p>
+				<p><strong>Ошибка гида:</strong> Начать спорить и доказывать свою правоту.</p>
+				<div class="risk-solution">
+					<p><strong>✅ Решение:</strong> Признать право на мнение и предложить эксперимент.</p>
+				</div>
+				<div class="speech" style="margin-top:12px;">
+					<div class="speech-label">🎤 Прямая речь гида</div>
+					<p>«Иван, спасибо за скепсис, обожаю критическое мышление! Предлагаю сделку: давайте отнесемся к этому как к игре-эксперименту на ближайшие 2 часа. Мы просто протестируем гипотезу. Если в конце на мосту вы скажете, что это не работает — я с вами соглашусь».</p>
+				</div>
+			</div>
+
+			<!-- Риск 2 -->
+			<div class="risk">
+				<div class="risk-title">🛑 Риск 2: Не выполняют упражнения (стоят в телефоне)</div>
+				<p><strong>Ошибка гида:</strong> Делать замечания, как учитель в школе («Уберите телефоны!»).</p>
+				<div class="risk-solution">
+					<p><strong>✅ Решение:</strong> Мягкое якорение через артефакт.</p>
+				</div>
+				<div class="speech" style="margin-top:12px;">
+					<div class="speech-label">🎤 Прямая речь гида</div>
+					<p>«Коллеги, я понимаю, как сложно сейчас не ответить на пуш-уведомление. Рука тянется сама. Нащупайте в кармане наш тяжелый талисман. Сделайте один глубокий вдох. Давайте подарим эти 5 минут только себе, рабочие чаты подождут».</p>
+				</div>
+			</div>
+
+			<!-- Риск 3 -->
+			<div class="risk">
+				<div class="risk-title">🛑 Риск 3: Группа разговаривает, не слушает гида</div>
+				<p><strong>Ошибка гида:</strong> Пытаться перекричать.</p>
+				<div class="risk-solution">
+					<p><strong>✅ Решение:</strong> Контраст громкости. Резко понизьте голос почти до шёпота и сделайте паузу 4 секунды. Группа инстинктивно замолчит, прислушиваясь.</p>
+				</div>
+			</div>
+
+			<div class="todo">ДОБАВИТЬ РИСКИ НА КАЖДОЕ УПРАЖНЕНИЕ + ВОЗМОЖНЫЕ ВАРИАЦИИ. ВАНИН КРАШ-ТЕСТ</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- БЛОК 2: ВВОДНЫЕ ДЛЯ ГИДА -->
+<!-- ======================== -->
+<section class="section fade-in" id="intro-guide">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📌 Вводные для гида</div>
+			<h2 class="card-title">Как работать с этим мануалом</h2>
+
+			<div class="info-grid">
+				<div class="info-item">
+					<div class="info-item-icon">📊</div>
+					<div class="info-item-title">Шкала энергии (0–10)</div>
+					<div class="info-item-desc">0 — «Осколки» (рассеянность). 10 — «Плотный луч» (ясность, присутствие)</div>
+				</div>
+				<div class="info-item">
+					<div class="info-item-icon">🪙</div>
+					<div class="info-item-title">Артефакт</div>
+					<div class="info-item-desc">Физический якорь. Напоминайте сжимать его при отвлечении на телефоны</div>
+				</div>
+				<div class="info-item">
+					<div class="info-item-icon">💬</div>
+					<div class="info-item-title">Шеринг</div>
+					<div class="info-item-desc">После каждого упражнения обязательно задавайте вопросы группе</div>
+				</div>
+				<div class="info-item">
+					<div class="info-item-icon">⏱</div>
+					<div class="info-item-title">Формат точки</div>
+					<div class="info-item-desc">13 минут: 5 мин история + 5 мин практика + 3 мин рефлексия</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ТОЧКА 1: МЕТРО -->
+<!-- ======================== -->
+<section class="section fade-in" id="point1">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📍 Точка 1 · Старт</div>
+			<h2 class="card-title">Площадь у метро — Пролог</h2>
+			<div class="card-location">📍 Шумный перекресток у м. Ленинский проспект / МЦК Площадь Гагарина</div>
+			<div class="card-time">⏱ 13 минут · Реквизит: тяжёлые талисманы (монеты/совы)</div>
+
+			<!-- ТАБЫ -->
+			<div class="tabs">
+				<button class="tab-btn active" data-tab="p1-script">📝 Скрипт</button>
+				<button class="tab-btn" data-tab="p1-risks">🛑 Риски</button>
+				<button class="tab-btn" data-tab="p1-planb">🌧 План Б</button>
+			</div>
+
+			<!-- ТАБ: СКРИПТ -->
+			<div class="tab-panel active" id="p1-script">
+
+				<div class="timeline-label">00:00 – 05:00</div>
+				<h3>Вступление и Фабула</h3>
+
+				<div class="speech">
+					<div class="speech-label">🎤 Слова гида</div>
+					<p>«Коллеги, добрый день! Спасибо, что нашли время прийти сюда. Вырваться из графика и просто пойти гулять — это уже победа. Мы стоим у площади Гагарина. Этот район строился в эпоху великих скоростей и прогресса. Прогресс дал нам невероятные технологии, но забрал кое-что взамен.</p>
+					<p>Представьте: Давным-давно у человечества был удивительный дар — <strong>Золотой Луч Внимания</strong>. Тёплый, плотный и глубокий. Когда люди направляли его на книгу — проживали целую жизнь с героями. На работу — создавали шедевры. А когда направляли друг на друга — собеседник расцветал, чувствуя себя <strong>самым важным человеком на свете</strong>.</p>
+					<p>Но однажды наступила Эпоха Великих Скоростей. Пришёл обаятельный дух-Иллюзионист.</p>
+					<p>Обаятельный дух технологий — Иллюзионист — предложил нам сделку: "Зачем вам один долгий луч? Давайте разобьем его на тысячи Стеклянных Осколков! Вы сможете делать 10 дел одновременно: скроллить, отвечать на почту, идти по улице". И мы согласились. Но осколки (наши уведомления и быстрые видео) оказались холодными. Они не греют. Наш мозг перегружен, мы смотрим, но не видим.</p>
+				</div>
+
+				<div class="speech">
+					<div class="speech-label">🎤 Раздача артефактов</div>
+					<p>«Возьмите этот талисман. Почувствуйте его тяжесть. Он не вибрирует. Сегодня это ваша кнопка возврата в реальность. Мы не воюем с телефонами. Сегодня мы — исследователи, которые будут управлять своим Золотым Лучом и наблюдать за результатами. И для начала давайте измерим, как он работает сейчас».</p>
+				</div>
+
+				<div class="speech">
+					<div class="speech-label">🎤 Стартовый замер энергии</div>
+					<p>«Оцените свое состояние на старте от 0 <em>("Рассыпанные осколки")</em> до 10 <em>("Плотный луч")</em>. Просто зафиксируйте эту цифру в уме».</p>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">05:00 – 10:00</div>
+				<h3>Упражнение 1: «Стартовый слепок»</h3>
+
+				<div class="exercise">
+					<div class="exercise-header">
+						<div class="exercise-icon">👁</div>
+						<div>
+							<div class="exercise-title">Стартовый слепок</div>
+							<div class="exercise-sub">Замер текущего состояния внимания</div>
+						</div>
+					</div>
+					<ul class="steps">
+						<li><div class="step-num">1</div><span>«Пожалуйста, посмотрите на этот павильон метро (или здание). У вас есть ровно <strong>1 минута</strong> в полной тишине. Постарайтесь его запомнить. Время пошло». <em>(Пауза 1 минута)</em></span></li>
+						<li><div class="step-num">2</div><span>«Стоп. Отвернитесь. У вас есть 2 минуты. Теперь давайте посмотрим и оценим, что мы запомнили. <strong>КРУГ</strong> — сколько деталей мы соберём всей группой?»</span></li>
+					</ul>
+					<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.84rem;color:var(--text-mid);margin-top:12px;">
+						<em>Формат «Круг»: гид считает вслух, пока группа накидывает детали. Итог: «Коллеги, вместе мы набрали 15 деталей».</em>
+					</p>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">10:00 – 13:00</div>
+				<h3>Шеринг и Мост в жизнь</h3>
+
+				<div class="sharing">
+					<div class="sharing-label">💬 Шеринг (Рефлексия)</div>
+					<p class="sharing-q">«Фиксируем, сколько кругов у нас получилось. Были ли связи между названными деталями? Скорее нет, чем да. Выхватили сумбурно, всё, что привык мозг выхватывать.»</p>
+				</div>
+
+				<div class="todo">ИСТОРИЯ ПРО ЭТО МЕСТО, которая покажет, как много всего показалось неважным, а на самом деле имеет значение.</div>
+
+				<div class="bridge">
+					<div class="bridge-label">🌉 Мост в жизнь</div>
+					<p>«Точно так же, "по диагонали", мы читаем важные отчеты и слушаем детей. Мы видим осколки. Пойдемте к Юрию Гагарину, чтобы сделать первый шаг к усилению нашего внимания — научимся побеждать фоновую суету».</p>
+				</div>
+			</div>
+
+			<!-- ТАБ: РИСКИ -->
+			<div class="tab-panel" id="p1-risks">
+				<h3>Краш-тест: Риски упражнения</h3>
+
+				<div class="risk">
+					<div class="risk-title">🛑 Группа молчит, никто не хочет говорить первым</div>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Гид начинает сам с самой очевидной или наоборот, самой нелепой детали.</p>
+					</div>
+					<div class="speech" style="margin-top:10px;">
+						<div class="speech-label">🎤 Прямая речь гида</div>
+						<p>«Я начну. Красная буква М на столбе. Кто следующий?»</p>
+					</div>
+				</div>
+
+				<div class="risk">
+					<div class="risk-title">🛑 Участники выдумывают детали, которых не было (ложная память)</div>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Не спорить. В шеринге отметить:</p>
+					</div>
+					<div class="speech" style="margin-top:10px;">
+						<div class="speech-label">🎤 Прямая речь гида</div>
+						<p>«Смотрите, как интересно: наш мозг не любит пустоты и сам дорисовывает картинку. Это тоже свойство осколочного внимания».</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- ТАБ: ПЛАН Б -->
+			<div class="tab-panel" id="p1-planb">
+				<h3>🌧 План Б: Серая погода / дождь / снег в лицо</h3>
+
+				<div class="planb">
+					<div class="planb-title">🎧 «Аудио-Круг»</div>
+					<p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:12px;"><strong>Смысл:</strong> Если смотреть на серое здание больно из-за ветра.</p>
+					<div class="speech">
+						<div class="speech-label">🎤 Инструкция</div>
+						<p>«Закройте глаза на 1 минуту. Направьте Луч только в уши. Посчитайте, сколько разных слоев звука вы услышите».</p>
+					</div>
+					<div class="sharing">
+						<div class="sharing-label">💬 Шеринг</div>
+						<p class="sharing-hint">Собираем «Круг звуков» (гул шин, стук каблуков, голос из рупора, ветер). Эффект тот же — мы замечаем, как много пропускает наш мозг.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПЕРЕХОД 1→2 -->
+<!-- ======================== -->
+<section class="section fade-in" style="padding:28px 0;">
+	<div class="container">
+		<div style="display:flex;align-items:center;gap:14px;padding:18px 24px;background:var(--gold-soft);border:1px solid var(--gold-border);border-radius:var(--radius-sm);">
+			<span style="font-size:1.6rem;">🚶‍♂️</span>
+			<div>
+				<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Переход к Точке 2</div>
+				<p style="font-size:0.9rem;color:var(--brown);margin:0;">5 минут пешком до памятника Гагарину</p>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- ======================== -->
+<!-- ТОЧКА 2: ГАГАРИН -->
+<!-- ======================== -->
+<section class="section fade-in" id="point2">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📍 Точка 2</div>
+			<h2 class="card-title">Памятник Гагарину — Панорама космонавта</h2>
+			<div class="card-location">📍 Площадь Гагарина · Ленинский проспект</div>
+			<div class="card-time">⏱ 13 минут</div>
+
+			<div class="tabs">
+				<button class="tab-btn active" data-tab="p2-script">📝 Скрипт</button>
+				<button class="tab-btn" data-tab="p2-risks">🛑 Риски</button>
+				<button class="tab-btn" data-tab="p2-planb">🌧 План Б</button>
+			</div>
+
+			<!-- ТАБ: СКРИПТ -->
+			<div class="tab-panel active" id="p2-script">
+
+				<div class="timeline-label">00:00 – 05:00</div>
+				<h3>Историческая справка</h3>
+
+				<div class="history">
+					<div class="history-label">📚 Готовый текст для гида</div>
+					<p>«Посмотрите наверх. Монумент Гагарину высотой более <strong>42 метров</strong>. Он сделан из титана — прочного и легкого металла космоса. Архитекторы задумывали этот столб как <strong>огненный шлейф</strong>, вырывающийся из дюз ракеты.</p>
+					<p>Представьте перегрузки в капсуле "Востока-1". Грохот, вибрация, абсолютная неизвестность. Это хаос. Но пульс Гагарина перед стартом был ровным. Космонавтов учили не впадать в панику и <strong>не позволять стрессу управлять их телом</strong>».</p>
+				</div>
+
+				<div class="todo">ИСТОРИЧЕСКАЯ ИНФОРМАЦИЯ — дополнительные факты о памятнике и истории полёта</div>
+
+				<div class="info-grid">
+					<div class="info-item">
+						<div class="info-item-icon">🌌</div>
+						<div class="info-item-title">42 м титана</div>
+						<div class="info-item-desc">Металл космоса — прочный и лёгкий</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🔥</div>
+						<div class="info-item-title">Столб огня</div>
+						<div class="info-item-desc">Форма — пламя из дюз ракеты при старте</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🧘</div>
+						<div class="info-item-title">Спокойный пульс</div>
+						<div class="info-item-desc">Ясность в условиях хаоса — навык космонавтов</div>
+					</div>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">05:00 – 10:00</div>
+				<h3>Упражнение 2: «Панорама космонавта»</h3>
+
+				<div class="bridge">
+					<div class="bridge-label">🔗 Смысловой мост</div>
+					<p>«Многозадачность в городе — это наша личная центрифуга. Когда мы боимся пропустить звонок или дедлайн, наш организм выделяет кортизол. В стрессе наше зрение физиологически сужается до точки (<strong>туннельное зрение зомби</strong>). Чтобы вернуть Луч, нужно сбросить физиологический спазм».</p>
+				</div>
+
+				<div class="exercise">
+					<div class="exercise-header">
+						<div class="exercise-icon">🚀</div>
+						<div>
+							<div class="exercise-title">Панорама космонавта</div>
+							<div class="exercise-sub">Расширяем поле зрения · Сбрасываем напряжение</div>
+						</div>
+					</div>
+					<ul class="steps">
+						<li><div class="step-num">1</div><span>«Встаньте удобно. Найдите взглядом <strong>лицо Гагарина</strong> высоко наверху. Зафиксируйте взгляд.»</span></li>
+						<li><div class="step-num">2</div><span>«А теперь, <strong>ВНИМАНИЕ</strong>: не отрывая глаз от его лица, не двигая зрачками, позвольте вашему вниманию "растечься" вширь. Заметьте плечи памятника. Заметьте деревья слева. Заметьте машины справа.»</span></li>
+						<li><div class="step-num">3</div><span>«Растяните свое восприятие на <strong>180 градусов</strong>, продолжая смотреть в центр. Мы постоим так ровно <strong>2 минуты</strong>. Дышите глубоко.»</span></li>
+					</ul>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">10:00 – 13:00</div>
+				<h3>Шеринг и Мост в жизнь</h3>
+
+				<div class="sharing">
+					<div class="sharing-label">💬 Шеринг (Рефлексия)</div>
+					<p class="sharing-q">«Поморгайте. Что произошло с вашим дыханием? Оно замедлилось? Ушли ли назойливые мысли?»</p>
+					<p class="sharing-hint"><em>(Слушает ответы)</em></p>
+				</div>
+
+				<div class="bridge">
+					<div class="bridge-label">🌉 Мост в жизнь</div>
+					<p>«С точки зрения нейробиологии, широкий угол зрения активизирует <strong>парасимпатическую нервную систему</strong>. Мозг получает сигнал: "Хищника нет, я в безопасности". Если вы чувствуете, что закипаете на совещании или рука нервно скроллит ленту — сделайте эту панораму на 30 секунд. Вы мгновенно успокоитесь».</p>
+				</div>
+
+				<div class="books">
+					<div class="books-label">📚 Где почитать гиду</div>
+					<div class="book-row"><span>🌐</span><div>Статья на официальном портале мэра Москвы (<strong>Mos.ru</strong>): История создания памятника Гагарину.</div></div>
+					<div class="book-row"><span>📖</span><div><strong>Первушин А.</strong> «108 минут, изменившие мир».</div></div>
+				</div>
+			</div>
+
+			<!-- ТАБ: РИСКИ -->
+			<div class="tab-panel" id="p2-risks">
+				<h3>Краш-тест: Риски упражнения</h3>
+
+				<div class="risk">
+					<div class="risk-title">🛑 У людей затекает шея смотреть высоко наверх</div>
+					<p>Они начинают опускать голову и теряют фокус.</p>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Дать инструкцию найти точку ниже.</p>
+					</div>
+				</div>
+
+				<div class="risk">
+					<div class="risk-title">🛑 «У меня не получается смотреть по сторонам, зрачки всё равно бегают»</div>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong></p>
+					</div>
+					<div class="speech" style="margin-top:10px;">
+						<div class="speech-label">🎤 Прямая речь гида</div>
+						<p>«Это нормально. Глазодвигательные мышцы привыкли к микро-скачкам (саккадам) по экрану. Просто мягко возвращайте взгляд в центр».</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- ТАБ: ПЛАН Б -->
+			<div class="tab-panel" id="p2-planb">
+				<h3>🌧 План Б: Низкая облачность / слепящее солнце / ветер</h3>
+
+				<div class="planb">
+					<div class="planb-title">👁 «Горизонтальная Панорама»</div>
+					<p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:12px;"><strong>Смысл:</strong> Если смотреть вверх на Гагарина физически дискомфортно.</p>
+					<div class="speech">
+						<div class="speech-label">🎤 Инструкция</div>
+						<p>«Найдите взглядом любой статичный объект прямо на уровне ваших глаз (фонарный столб, знак на другой стороне дороги). Смотрите на него. А теперь "растяните" внимание вправо и влево до самых краев периферического зрения. Почувствуйте объем пространства вокруг вас».</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПЕРЕХОД 2→3 -->
+<!-- ======================== -->
+<section class="section fade-in" style="padding:28px 0;">
+	<div class="container">
+		<div style="display:flex;align-items:center;gap:14px;padding:18px 24px;background:var(--gold-soft);border:1px solid var(--gold-border);border-radius:var(--radius-sm);">
+			<span style="font-size:1.6rem;">🚶‍♂️</span>
+			<div>
+				<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Переход к Точке 3</div>
+				<p style="font-size:0.9rem;color:var(--brown);margin:0;">15 минут пешком до смотровой площадки РАН</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ТОЧКА 3: РАН -->
+<!-- ======================== -->
+<section class="section fade-in" id="point3">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📍 Точка 3</div>
+			<h2 class="card-title">Смотровая площадка РАН — Фокус-окно</h2>
+			<div class="card-location">📍 У парапета, лицом к панораме города</div>
+			<div class="card-time">⏱ 13 минут</div>
+
+			<div class="tabs">
+				<button class="tab-btn active" data-tab="p3-script">📝 Скрипт</button>
+				<button class="tab-btn" data-tab="p3-risks">🛑 Риски</button>
+				<button class="tab-btn" data-tab="p3-planb">🌧 План Б</button>
+			</div>
+
+			<!-- ТАБ: СКРИПТ -->
+			<div class="tab-panel active" id="p3-script">
+
+				<div class="timeline-label">00:00 – 05:00</div>
+
+				<h3>Замер энергии №2</h3>
+				<div class="speech">
+					<div class="speech-label">🎤 Слова гида</div>
+					<p>«Вспомните свою цифру у метро. Где вы сейчас по шкале от 0 до 10? <strong>Поднимите руку те, у кого цифра стала хотя бы на балл выше?</strong>»</p>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<h3>Историческая справка</h3>
+				<div class="history">
+					<div class="history-label">📚 Готовый текст для гида</div>
+					<p>«Посмотрите на это монументальное здание позади нас. Это <strong>Президиум Российской Академии Наук</strong>, яркий пример советского модернизма, который строили почти 20 лет. Москвичи сразу прозвали эту конструкцию на крыше <strong>"Золотыми мозгами"</strong>. Ходили легенды, что это секретные установки КГБ, глушилки или гигантские солнечные батареи. На самом деле всё прозаичнее: этот золотистый металл (сплав титана) скрывает за собой сложную систему вентиляции, вытяжек и антенн.</p>
+					<p>Но метафора потрясающая. Это здание, как <strong>огромный мозг</strong>, возвышается над городом и собирает сигналы со всей столицы».</p>
+				</div>
+
+				<div class="todo">ИСТОРИЧЕСКАЯ ИНФОРМАЦИЯ — дополнительные факты о здании РАН</div>
+
+				<div class="info-grid">
+					<div class="info-item">
+						<div class="info-item-icon">🏛</div>
+						<div class="info-item-title">20 лет стройки</div>
+						<div class="info-item-desc">Яркий пример советского модернизма</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🧠</div>
+						<div class="info-item-title">«Золотые мозги»</div>
+						<div class="info-item-desc">Титановый сплав скрывает вентиляцию и антенны</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">📡</div>
+						<div class="info-item-title">Легенды</div>
+						<div class="info-item-desc">Глушилки КГБ, солнечные батареи, связь с инопланетянами</div>
+					</div>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">05:00 – 10:00</div>
+				<h3>Упражнение 3: «Фокус-окно 3×3»</h3>
+
+				<div class="bridge">
+					<div class="bridge-label">🔗 Смысловой мост</div>
+					<p>«Посмотрите вниз на город. Это <strong>фабрика информационного шума/сигналов</strong>. Иллюзионист приучил нас рефлекторно реагировать на каждый "дзынь" телефона. Но у нас в голове есть свои "золотые мозги" — <strong>префронтальная кора</strong>. Это наш пульт управления. Мы имеем право сами выбирать, какую информацию впускать. Давайте потренируем эту "мышцу"».</p>
+				</div>
+
+				<div class="todo">НАДО ПРОВЕРИТЬ ИНСТРУКЦИЮ: ВИЗУАЛЬНЫЕ ОБЪЕКТЫ ИЛИ АУДИО? — Ответ: Инструкция верная! Суть в кросс-сенсорном переключении (Макро-Визуал → Аудио → Микро-Визуал). Это сильнее всего тренирует префронтальную кору.</div>
+
+				<div class="exercise">
+					<div class="exercise-header">
+						<div class="exercise-icon">🔍</div>
+						<div>
+							<div class="exercise-title">Фокус-окно 3×3</div>
+							<div class="exercise-sub">Кросс-сенсорное переключение масштаба внимания</div>
+						</div>
+					</div>
+					<ul class="steps">
+						<li><div class="step-num">1</div><span>«Направьте взгляд на панораму. Найдите <strong>3 объекта на самом дальнем горизонте</strong> (небоскреб, труба, облако). Фиксируем.» <em>(15 сек)</em></span></li>
+						<li><div class="step-num">2</div><span>«Теперь придвиньте фокус ближе: найдите <strong>3 звука</strong>, которые доносятся из города (гул авто, стройка).» <em>(15 сек)</em></span></li>
+						<li><div class="step-num">3</div><span>«Теперь опустите фокус прямо перед собой на парапет. Найдите <strong>3 микро-детали</strong> (трещинка в камне, пятнышко).» <em>(15 сек)</em></span></li>
+						<li><div class="step-num">4</div><span>«А теперь <strong>"помиксуйте"</strong>: секунду смотрите вдаль, секунду на трещинку.»</span></li>
+					</ul>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">10:00 – 13:00</div>
+				<h3>Шеринг и Мост в жизнь</h3>
+
+				<div class="sharing">
+					<div class="sharing-label">💬 Шеринг (Рефлексия)</div>
+					<p class="sharing-q">«Вы почувствовали, как физически "переключали передачи" в голове? Что было легче: дальний план или микро-детали?»</p>
+				</div>
+
+				<div class="bridge">
+					<div class="bridge-label">🌉 Мост в жизнь</div>
+					<p>«Это упражнение на <strong>произвольное внимание</strong>. Когда вы вечером приходите домой уставшим, вы приносите "дальний горизонт" рабочих проблем с собой. Остановитесь у двери. Найдите 3 детали на ручке двери. Вы переключите фокус и зайдете к семье <strong>присутствующим здесь и сейчас</strong>».</p>
+				</div>
+
+				<div class="books">
+					<div class="books-label">📚 Где почитать гиду</div>
+					<div class="book-row"><span>🌐</span><div>Архитектурный портал <strong>Архи.ру</strong>: Здание Президиума РАН.</div></div>
+					<div class="book-row"><span>🌐</span><div>Сайт <strong>«Узнай Москву»</strong>: Легенды «Золотых мозгов».</div></div>
+				</div>
+			</div>
+
+			<!-- ТАБ: РИСКИ -->
+			<div class="tab-panel" id="p3-risks">
+				<h3>Краш-тест: Риски упражнения</h3>
+
+				<div class="risk">
+					<div class="risk-title">🛑 Шум с ТТК настолько сильный, что других звуков не слышно</div>
+					<p>Люди раздражаются, не могут выделить звуковые слои.</p>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Заменить аудио-канал на телесный (кинестетический).</p>
+					</div>
+					<div class="speech" style="margin-top:10px;">
+						<div class="speech-label">🎤 Прямая речь гида</div>
+						<p>«Найдите 3 ощущения в теле (ветер на щеке, холод парапета, тяжесть ботинок)».</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- ТАБ: ПЛАН Б -->
+			<div class="tab-panel" id="p3-planb">
+				<h3>🌧 План Б: Густой туман / смог / не видно горизонта</h3>
+
+				<div class="planb">
+					<div class="planb-title">🔬 «Микро-Космос»</div>
+					<p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:12px;"><strong>Смысл:</strong> Города не видно, серая пелена давит на психику.</p>
+					<div class="speech">
+						<div class="speech-label">🎤 Инструкция</div>
+						<p>«Город скрыт от нас. Иллюзионист напустил туман. Опустите взгляд на парапет перед собой. Сузьте свой Луч до квадрата 10×10 сантиметров. Найдите там <strong>3 разные фактуры</strong> (гладкое, шершавое, мокрое), <strong>3 оттенка серого</strong> и <strong>3 геометрические формы</strong>. Вселенная есть даже в одном камне, если уметь на нее смотреть».</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПЕРЕХОД 3→4 (с заданием!) -->
+<!-- ======================== -->
+<section class="section fade-in" style="padding:28px 0;">
+	<div class="container">
+		<div style="padding:22px 24px;background:var(--gold-soft);border:1px solid var(--gold-border);border-radius:var(--radius-sm);">
+			<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+				<span style="font-size:1.6rem;">🚶‍♂️</span>
+				<div>
+					<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Переход к Точке 4</div>
+					<p style="font-size:0.9rem;color:var(--brown);margin:0;">Спускаемся в Нескучный сад</p>
+				</div>
+			</div>
+			<div class="exercise" style="margin:0;">
+				<div class="exercise-header">
+					<div class="exercise-icon">👂</div>
+					<div>
+						<div class="exercise-title">Задание на ходу</div>
+						<div class="exercise-sub">Микро-практика во время перехода</div>
+					</div>
+				</div>
+				<div class="speech" style="margin:0;">
+					<div class="speech-label">🎤 Слова гида</div>
+					<p>«Пока мы спускаемся в парк, попробуйте направить Золотой Луч только на <strong>звуки хруста под ногами</strong>. Если отвлеклись — сожмите талисман в кармане».</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- ======================== -->
+<!-- ТОЧКА 4: НЕСКУЧНЫЙ САД -->
+<!-- ======================== -->
+<section class="section fade-in" id="point4">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📍 Точка 4</div>
+			<h2 class="card-title">Нескучный сад — Фрактальная пауза</h2>
+			<div class="card-location">📍 Нескучный сад · Главная аллея</div>
+			<div class="card-time">⏱ 13 минут</div>
+
+			<div class="tabs">
+				<button class="tab-btn active" data-tab="p4-script">📝 Скрипт</button>
+				<button class="tab-btn" data-tab="p4-risks">🛑 Риски</button>
+				<button class="tab-btn" data-tab="p4-planb">🌧 План Б</button>
+			</div>
+
+			<!-- ТАБ: СКРИПТ -->
+			<div class="tab-panel active" id="p4-script">
+
+				<div class="timeline-label">00:00 – 05:00</div>
+				<h3>Историческая справка</h3>
+
+				<div class="history">
+					<div class="history-label">📚 Готовый текст (на входе в парк)</div>
+					<p>«Мы спустились в <strong>Нескучный сад — старейший парк Москвы</strong>. Когда-то здесь были три дворянские усадьбы, в том числе графа Орлова. Почему "Нескучный"? Граф устраивал здесь грандиозные праздники, строил лабиринты, оранжереи с экзотическими птицами — делал всё, чтобы его гостям <strong>не было скучно</strong>.</p>
+					<p>Но сейчас этот парк ценен для нас другим. Посмотрите на эти деревья — <strong>многим из них больше 150 лет</strong>. Они пережили революции, войны, смену эпох. Природа растет медленно. Она не знает, что такое дедлайны и многозадачность. В ней нет "белого шума" прямых линий мегаполиса, здесь правят <strong>фракталы</strong> — естественные, повторяющиеся узоры веток и листьев».</p>
+				</div>
+
+				<div class="todo">ИСТОРИЧЕСКАЯ СПРАВКА — дополнительные факты об усадьбах</div>
+
+				<div class="info-grid">
+					<div class="info-item">
+						<div class="info-item-icon">🏛</div>
+						<div class="info-item-title">3 усадьбы</div>
+						<div class="info-item-desc">Орловых, Трубецких, Голицыных</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🌳</div>
+						<div class="info-item-title">150+ лет</div>
+						<div class="info-item-desc">Деревья-долгожители парка</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🌀</div>
+						<div class="info-item-title">Фракталы</div>
+						<div class="info-item-desc">Природные узоры, восстанавливающие мозг</div>
+					</div>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">05:00 – 10:00</div>
+				<h3>Упражнение 4: «Фрактальная пауза»</h3>
+
+				<div class="bridge">
+					<div class="bridge-label">🔗 Смысловой мост</div>
+					<p>«Наши экраны — это плоский, искусственный свет, который истощает мозг. Созерцание природных фракталов, наоборот, работает как <strong>беспроводная зарядка для нервной системы</strong>. Давайте дадим нашему вниманию исцеляющую, глубокую паузу».</p>
+				</div>
+
+				<div style="background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--radius-sm);padding:16px 20px;margin:14px 0;font-family:'Segoe UI',Arial,sans-serif;font-size:0.86rem;color:var(--text-mid);">
+					<strong style="color:steelblue;">📊 Научная справка:</strong> По данным исследований Университета Мичигана (теория ART Стивена Каплана), созерцание природных фракталов восстанавливает направленное внимание и снижает когнитивную усталость на 20% всего за пару минут.
+				</div>
+
+				<div class="exercise">
+					<div class="exercise-header">
+						<div class="exercise-icon">🌿</div>
+						<div>
+							<div class="exercise-title">Фрактальная пауза</div>
+							<div class="exercise-sub">Глубокое созерцание · Восстановление внимания через природу</div>
+						</div>
+					</div>
+					<ul class="steps">
+						<li><div class="step-num">1</div><span>«Выберите любое дерево рядом с вами. Подойдите поближе.»</span></li>
+						<li><div class="step-num">2</div><span>«У вас есть <strong>2 минуты полной тишины</strong>. Направьте свой Золотой Луч на кору или лист.»</span></li>
+						<li><div class="step-num">3</div><span>«Рассматривайте каждую трещинку, каждый изгиб так, будто вам предстоит <strong>нарисовать это по памяти</strong>. "Пейте" этот сложный узор глазами.»</span></li>
+						<li><div class="step-num">4</div><span>«Если мысль улетела — мягко верните её на кору.»</span></li>
+					</ul>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">10:00 – 13:00</div>
+				<h3>Шеринг и Мост в жизнь</h3>
+
+				<div class="sharing">
+					<div class="sharing-label">💬 Шеринг (Рефлексия)</div>
+					<p class="sharing-q">«Как ощущается голова после этих двух минут? Появилось ли чувство небольшой "пустоты" и прохлады в мыслях?»</p>
+				</div>
+
+				<div class="bridge">
+					<div class="bridge-label">🌉 Мост в жизнь</div>
+					<p>«Это называется <strong>"мягкое очарование" (soft fascination)</strong> — научно доказанный метод восстановления внимания. Как применять? Когда вы стоите в очереди или ждёте лифт, не доставайте телефон (Осколок). Найдите сложный узор (дерево за окном, текстура стены) и погрузитесь в него на 1 минуту. Вы реально отдохнёте».</p>
+				</div>
+
+				<div class="books">
+					<div class="books-label">📚 Где почитать гиду</div>
+					<div class="book-row"><span>🌐</span><div>Официальный сайт Парка Горького (раздел история Нескучного сада): <strong>park-gorkogo.com</strong>.</div></div>
+				</div>
+			</div>
+
+			<!-- ТАБ: РИСКИ -->
+			<div class="tab-panel" id="p4-risks">
+				<h3>Краш-тест: Риски упражнения</h3>
+
+				<div class="risk">
+					<div class="risk-title">🛑 Деревья осенью/зимой голые, чёрные и «страшные»</div>
+					<p>Участники говорят: «Тут не на что смотреть, это депрессивно».</p>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Перевести фокус с эстетики на геометрию.</p>
+					</div>
+					<div class="speech" style="margin-top:10px;">
+						<div class="speech-label">🎤 Прямая речь гида</div>
+						<p>«Мы ищем не красоту, мы ищем <strong>математику природы</strong> — сложную геометрию линий».</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- ТАБ: ПЛАН Б -->
+			<div class="tab-panel" id="p4-planb">
+				<h3>🌧 План Б: Очень серо, промозгло, группа унывает</h3>
+
+				<div class="planb">
+					<div class="planb-title">🎯 «Охота за Дофамином»</div>
+					<p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:12px;"><strong>Смысл:</strong> В серости мозг засыпает. Нам надо искусственно запустить поиск ярких пятен.</p>
+					<div class="speech">
+						<div class="speech-label">🎤 Инструкция</div>
+						<p>«Серость забирает энергию. Сейчас мы заставим мозг выработать микро-дозы дофамина. Направьте ваш Золотой Луч на <strong>поиск цвета</strong>. Найдите вокруг 3 объекта неестественно яркого цвета. Это может быть куртка прохожего, забытая игрушка, яркий мох, красная ягода на кусте. <strong>Кто найдёт самое неочевидное цветовое пятно?</strong>»</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПЕРЕХОД 4→5 (с упражнением!) -->
+<!-- ======================== -->
+<section class="section fade-in" style="padding:28px 0;">
+	<div class="container">
+		<div style="padding:22px 24px;background:var(--gold-soft);border:1px solid var(--gold-border);border-radius:var(--radius-sm);">
+			<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+				<span style="font-size:1.6rem;">🚶‍♂️</span>
+				<div>
+					<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Переход к Точке 5</div>
+					<p style="font-size:0.9rem;color:var(--brown);margin:0;">10 минут пешком к Охотничьему домику</p>
+				</div>
+			</div>
+			<div class="exercise" style="margin:0;">
+				<div class="exercise-header">
+					<div class="exercise-icon">❓</div>
+					<div>
+						<div class="exercise-title">«Внутренний фильтр»</div>
+						<div class="exercise-sub">Задание на ходу — переключаем мозг в режим вопроса</div>
+					</div>
+				</div>
+				<div class="speech" style="margin:0;">
+					<div class="speech-label">🎤 Слова гида</div>
+					<p>«Пока мы идём к Охотничьему домику — месту, где задают вопросы, — давайте потренируем <strong>"Внутренний фильтр"</strong>. Иллюзионист приучил нас мыслить утверждениями и ярлыками ("холодно", "грязно", "красиво"). А сейчас переключите мозг в <strong>режим Вопроса</strong>.</p>
+					<p>Пока мы идём, найдите взглядом любой объект и задайте к нему вопрос, на который вы не знаете ответа. Например: "Сколько лет этому дереву?", "О чём думает тот прохожий?", "Почему эта дорожка изогнута именно так?". <strong>Включите искреннее детское любопытство.</strong> Это лучшее топливо для Золотого Луча».</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ТОЧКА 5: ОХОТНИЧИЙ ДОМИК (ЧГК) -->
+<!-- ======================== -->
+<section class="section fade-in" id="point5">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📍 Точка 5</div>
+			<h2 class="card-title">Охотничий домик (ЧГК) — Код Совы</h2>
+			<div class="card-location">📍 У ограды, с видом на домик-ротонду</div>
+			<div class="card-time">⏱ 13 минут</div>
+
+			<div class="tabs">
+				<button class="tab-btn active" data-tab="p5-script">📝 Скрипт</button>
+				<button class="tab-btn" data-tab="p5-risks">🛑 Риски</button>
+				<button class="tab-btn" data-tab="p5-planb">🌧 План Б</button>
+			</div>
+
+			<!-- ТАБ: СКРИПТ -->
+			<div class="tab-panel active" id="p5-script">
+
+				<div class="timeline-label">00:00 – 05:00</div>
+
+				<h3>Замер энергии №3</h3>
+				<div class="speech">
+					<div class="speech-label">🎤 Слова гида</div>
+					<p>«Мы вышли из леса. Сверьте внутренние часы. <strong>Какая у вас сейчас цифра энергии?</strong>»</p>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<h3>Историческая справка</h3>
+				<div class="history">
+					<div class="history-label">📚 Готовый текст для гида</div>
+					<p>«Перед нами <strong>Охотничий домик</strong> середины 18 века. Изначально здесь хранили охотничьи снасти.</p>
+					<p>В <strong>1990 году</strong> сюда переехала передача "Что? Где? Когда?". Символ игры — сова. И это идеальный образ для нас. <strong>Сова видит в темноте.</strong> Знатоки за 60 секунд умудряются из хаоса фактов вытащить единственно верный смысл».</p>
+				</div>
+
+				<div class="todo">Исторические данные — дополнительные факты об Охотничьем домике и усадьбе Трубецких</div>
+
+				<div class="info-grid">
+					<div class="info-item">
+						<div class="info-item-icon">🏛</div>
+						<div class="info-item-title">XVIII век</div>
+						<div class="info-item-desc">Старейшее каменное здание парка</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🦉</div>
+						<div class="info-item-title">ЧГК с 1990</div>
+						<div class="info-item-desc">Культовая передача снимается здесь</div>
+					</div>
+					<div class="info-item">
+												<div class="info-item-icon">🌙</div>
+						<div class="info-item-title">Сова — символ</div>
+						<div class="info-item-desc">Видит суть в темноте и хаосе</div>
+					</div>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">05:00 – 10:00</div>
+				<h3>Упражнение 5: «Код Совы» (Матрица смыслов)</h3>
+
+				<div class="bridge">
+					<div class="bridge-label">🔗 Смысловой мост</div>
+					<p>«Мы потребляем тонны информации, но ничего не помним. Почему? Потому что мы просто смотрим, но не кодируем. <strong>Осколок информации выветривается.</strong> Чтобы Луч оставил след в памяти, нам нужен "каркас смысла". Давайте научимся запоминать объекты так, чтобы это осталось навсегда».</p>
+				</div>
+
+				<div class="exercise">
+					<div class="exercise-header">
+						<div class="exercise-icon">🦉</div>
+						<div>
+							<div class="exercise-title">Код Совы (Матрица смыслов)</div>
+							<div class="exercise-sub">Глубокое кодирование через структуру</div>
+						</div>
+					</div>
+					<ul class="steps">
+						<li><div class="step-num">1</div><span>«Мы не будем просто пялиться на домик. Мы наложим на него <strong>"Код Совы"</strong>. Ответьте себе на 4 вопроса (глядя на домик):»</span></li>
+					</ul>
+
+					<div class="info-grid" style="margin:16px 0;">
+						<div class="info-item" style="text-align:left;">
+							<div class="info-item-title">📐 Форма</div>
+							<div class="info-item-desc">Какая она? (Круглая, как барабан)</div>
+						</div>
+						<div class="info-item" style="text-align:left;">
+							<div class="info-item-title">🎨 Цвета</div>
+							<div class="info-item-desc">Назовите 3 главных цвета</div>
+						</div>
+						<div class="info-item" style="text-align:left;">
+							<div class="info-item-title">❗ Аномалия</div>
+							<div class="info-item-desc">Что здесь странного? (Купол, решётки, лепнина)</div>
+						</div>
+						<div class="info-item" style="text-align:left;">
+							<div class="info-item-title">💡 Ассоциация</div>
+							<div class="info-item-desc">На что похоже в быту? (На перевёрнутую чашку)</div>
+						</div>
+					</div>
+
+					<ul class="steps">
+						<li><div class="step-num">2</div><span>«Проговорите это про себя. Сложите в структуру.» <em>(Пауза 1 минута)</em></span></li>
+					</ul>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">10:00 – 13:00</div>
+				<h3>Шеринг и Мост в жизнь</h3>
+
+				<div class="sharing">
+					<div class="sharing-label">💬 Шеринг (Рефлексия)</div>
+					<p class="sharing-q">«Кто готов назвать свою бытовую ассоциацию?»</p>
+					<p class="sharing-hint"><em>(Слушает)</em> «Заметьте, теперь вы смотрите на домик не как на пятно, а как на систему».</p>
+				</div>
+
+				<div class="bridge">
+					<div class="bridge-label">🌉 Мост в жизнь</div>
+					<p>«Это <strong>метод глубокой обработки</strong>. Если вы слушаете важную лекцию или знакомитесь с новыми людьми на нетворкинге — не пытайтесь запомнить всё. Ищите <strong>Форму, Аномалию</strong> (яркую деталь внешности) <strong>и Ассоциацию</strong>. Вы станете мастером памяти».</p>
+				</div>
+
+				<div class="books">
+					<div class="books-label">📚 Где почитать гиду</div>
+					<div class="book-row"><span>🌐</span><div>Портал <strong>«Узнай Москву»</strong>: Охотничий домик Трубецких.</div></div>
+				</div>
+			</div>
+
+			<!-- ТАБ: РИСКИ -->
+			<div class="tab-panel" id="p5-risks">
+				<h3>Краш-тест: Риски упражнения</h3>
+
+				<div class="risk">
+					<div class="risk-title">🛑 Группа устала (когнитивный перегруз)</div>
+					<p>Придумывать абсурдные ассоциации им лень. Мозг сопротивляется креативу.</p>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Снизить планку. Попросить не придумывать историю, а просто сравнить форму с любым предметом с их рабочего стола или из кухни.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- ТАБ: ПЛАН Б -->
+			<div class="tab-panel" id="p5-planb">
+				<h3>🌧 План Б: Идёт дождь, люди хотят спрятаться под зонты</h3>
+
+				<div class="planb">
+					<div class="planb-title">🤸 «Телесный Якорь»</div>
+					<p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:12px;"><strong>Смысл:</strong> Минимизировать время нахождения на месте, задействовать тело (моторику).</p>
+					<div class="speech">
+						<div class="speech-label">🎤 Инструкция</div>
+						<p>«Чтобы быстро запомнить домик, мы перенесём его образ на тело. <strong>Форма</strong> — круглая (сделайте круг рукой). <strong>Цвет</strong> — найдите такой же оттенок (жёлтый/кирпичный) на своей одежде или одежде соседа и прикоснитесь к нему. <strong>Аномалия</strong> — решётка (скрестите пальцы рук). Вы только что записали <strong>Код Совы через мышечную память</strong>».</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПЕРЕХОД 5→6 -->
+<!-- ======================== -->
+<section class="section fade-in" style="padding:28px 0;">
+	<div class="container">
+		<div style="display:flex;align-items:center;gap:14px;padding:18px 24px;background:var(--gold-soft);border:1px solid var(--gold-border);border-radius:var(--radius-sm);">
+			<span style="font-size:1.6rem;">🚶‍♂️</span>
+			<div>
+				<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Переход к Точке 6 · Финал</div>
+				<p style="font-size:0.9rem;color:var(--brown);margin:0;">5 минут пешком до Андреевского моста</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ТОЧКА 6: АНДРЕЕВСКИЙ МОСТ -->
+<!-- ======================== -->
+<section class="section fade-in" id="point6">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">📍 Точка 6 · Финал</div>
+			<h2 class="card-title">Андреевский мост — Интеграция</h2>
+			<div class="card-location">📍 На мосту (или под стеклянным куполом), панорамный вид на реку</div>
+			<div class="card-time">⏱ 13 минут</div>
+
+			<div class="tabs">
+				<button class="tab-btn active" data-tab="p6-script">📝 Скрипт</button>
+				<button class="tab-btn" data-tab="p6-risks">🛑 Риски</button>
+				<button class="tab-btn" data-tab="p6-planb">🌧 План Б</button>
+			</div>
+
+			<!-- ТАБ: СКРИПТ -->
+			<div class="tab-panel active" id="p6-script">
+
+				<div class="timeline-label">00:00 – 05:00</div>
+				<h3>Историческая справка</h3>
+
+				<div class="history">
+					<div class="history-label">📚 Готовый текст для гида</div>
+					<p>«Мы завершаем наш путь на <strong>Андреевском (Пушкинском) мосту</strong>. Знаете его главную тайну? Эта огромная металлическая арка весом <strong>1500 тонн</strong> раньше стояла совершенно в другом месте!</p>
+					<p>В <strong>1999 году</strong> её погрузили на гигантские баржи и по воде филигранно сплавили сюда. Это был процесс перемещения колоссальной тяжести. Точно так же сегодня мы с вами учились <strong>перемещать тяжесть нашего внимания</strong>».</p>
+				</div>
+
+				<div class="todo">ИСТОРИЧЕСКАЯ ИНФОРМАЦИЯ — дополнительные факты о перемещении моста</div>
+
+				<div class="info-grid">
+					<div class="info-item">
+						<div class="info-item-icon">⚓</div>
+						<div class="info-item-title">1500 тонн</div>
+						<div class="info-item-desc">Стальная арка, переместившаяся по реке</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🚢</div>
+						<div class="info-item-title">3 баржи</div>
+						<div class="info-item-desc">Филигранная операция 1999 года</div>
+					</div>
+					<div class="info-item">
+						<div class="info-item-icon">🌉</div>
+						<div class="info-item-title">Символ перехода</div>
+						<div class="info-item-desc">Из тишины сада — обратно в ритм мегаполиса</div>
+					</div>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">05:00 – 10:00</div>
+				<h3>Упражнение 6: «Финальный слепок»</h3>
+
+				<div class="bridge">
+					<div class="bridge-label">🔗 Смысловой мост</div>
+					<p>«Мост — это переход. Позади сад-убежище, впереди снова шумный город. Иллюзионист ждёт нас там. Давайте проверим, удалось ли нам <strong>собрать наш Золотой Луч воедино</strong>».</p>
+				</div>
+
+								<div class="exercise">
+					<div class="exercise-header">
+						<div class="exercise-icon">🌉</div>
+						<div>
+							<div class="exercise-title">Финальный слепок</div>
+							<div class="exercise-sub">Сравниваем внимание: до и после</div>
+						</div>
+					</div>
+					<ul class="steps">
+						<li><div class="step-num">1</div><span>«Посмотрите на панораму реки и города. Вспомните всё: сделайте <strong>широкий взгляд Гагарина</strong>, отсеките лишний шум, примените <strong>Код Совы</strong>. Ровно <strong>1 минута молчания</strong>.» <em>(Пауза 1 мин)</em></span></li>
+						<li><div class="step-num">2</div><span>«Отвернитесь. И мы снова сделаем <strong>круговой тест</strong>.»</span></li>
+					</ul>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<div class="timeline-label">10:00 – 13:00</div>
+				<h3>Шеринг и Эпилог</h3>
+
+				<div class="sharing">
+					<div class="sharing-label">💬 Шеринг (Кульминация)</div>
+					<p class="sharing-q">«Мы смогли вспомнить деталей на Х кругов больше»</p>
+					<p class="sharing-hint"><em>(Люди радуются результату)</em></p>
+				</div>
+
+				<h3>Финальный замер энергии (№4)</h3>
+				<div class="speech">
+					<div class="speech-label">🎤 Слова гида</div>
+					<p>«И последняя цифра на сегодня. <strong>Где вы по шкале от 0 до 10 прямо сейчас?</strong>» <em>(Просим каждого назвать цифру)</em></p>
+				</div>
+
+				<div class="divider"><div class="divider-line"></div><div class="divider-dot">✦</div><div class="divider-line"></div></div>
+
+				<h3>Эпилог (Прощание)</h3>
+				<div class="speech">
+					<div class="speech-label">🎤 Финальная речь гида</div>
+					<p>«Это ваш мощный Золотой Луч. Вы доказали, что ваш мозг принадлежит вам. Мы все сегодня вернёмся в рабочие чаты. Но теперь вы знаете секрет: <strong>ваш Луч всегда при вас</strong>.</p>
+					<p>Когда станет тяжело — нащупайте талисман в кармане. Сделайте панораму. Выберите, куда смотреть.</p>
+					<p>И самое главное — <strong>подарите этот глубокий Золотой Луч сегодня вечером своим близким</strong>. Это самый дорогой подарок.</p>
+					<p>Спасибо вам за это потрясающее, тёплое внимание. <strong>Вы — Герои!</strong>»</p>
+				</div>
+
+				<div class="books">
+					<div class="books-label">📚 Где почитать гиду</div>
+					<div class="book-row"><span>🌐</span><div>Статья о перемещении моста: Журнал <strong>«Наука и жизнь»</strong> (архив 2000 г.) или <strong>Мосты Москвы</strong>.</div></div>
+				</div>
+			</div>
+
+			<!-- ТАБ: РИСКИ -->
+			<div class="tab-panel" id="p6-risks">
+				<h3>Краш-тест: Риски упражнения</h3>
+
+				<div class="risk">
+					<div class="risk-title">🛑 На мосту очень ветрено и холодно</div>
+					<p>Группа хочет быстрее закончить, не сосредоточиться.</p>
+					<div class="risk-solution">
+						<p><strong>✅ Решение:</strong> Проводить упражнение строго <strong>ВНУТРИ застеклённой галереи моста</strong>. Там тепло, тихо и прекрасный вид.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- ТАБ: ПЛАН Б -->
+			<div class="tab-panel" id="p6-planb">
+				<h3>🌧 План Б: За окном моста темно / метель / ничего не видно</h3>
+
+				<div class="planb">
+					<div class="planb-title">🧘 «Внутренний Слепок»</div>
+					<p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:12px;"><strong>Смысл:</strong> Если внешний мир не даёт картинки, мы обращаемся к внутренней памяти за 2 часа прогулки.</p>
+					<div class="speech">
+						<div class="speech-label">🎤 Инструкция</div>
+						<p>«За окном сейчас серая мгла (или темнота). Поэтому мы направим Золотой Луч внутрь себя. Закройте глаза. Вспомните весь наш маршрут. Найдите там <strong>1 деталь, 1 слово или 1 ощущение</strong>, которое оказалось для вас самым сильным сегодня. Зафиксируйте его. <strong>Это и будет тот "Осколок", который сегодня превратился в чистое золото</strong>».</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПРИЛОЖЕНИЕ: ПЛАН Б -->
+<!-- ======================== -->
+<section class="section fade-in" id="appendix">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">🆘 Приложение</div>
+			<h2 class="card-title">Запасные упражнения (План «Б»)</h2>
+			<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.9rem;color:var(--text-mid);margin-bottom:22px;">Если группа устала от визуала или на улице слишком темно / плохая погода.</p>
+
+			<div class="planb">
+				<div class="planb-title">🎧 «Аудио-радар» (Замена Упр. 3 у РАН)</div>
+				<div class="speech">
+					<div class="speech-label">🎤 Инструкция</div>
+					<p>«Закройте глаза. Найдите 3 слоя звука: 1) самый громкий звук мегаполиса, 2) фоновый гул, 3) самый тихий звук рядом с вами (дыхание соседа). Выделите их по очереди».</p>
+				</div>
+			</div>
+
+			<div class="planb">
+				<div class="planb-title">🧹 «Ментальный ластик» (Если кто-то сильно нервничает из-за работы)</div>
+				<div class="speech">
+					<div class="speech-label">🎤 Инструкция</div>
+					<p>«Посмотрите на эту урну/столб. Закройте глаза. Представьте её. А теперь мысленно возьмите школьный ластик и <strong>стирайте её сверху вниз</strong>, пока в голове не останется пустота».</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- БЛОК: ЗАМЕТКИ ДЛЯ МЕТОДОЛОГА -->
+<!-- ======================== -->
+<section class="section fade-in" id="methodologist">
+	<div class="container">
+		<div class="card">
+			<div class="card-badge">🧠 Финальный блок</div>
+			<h2 class="card-title">Заметки для методолога-разработчика</h2>
+			<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.9rem;color:var(--text-mid);margin-bottom:22px;">На что обратить внимание при упаковке и масштабировании продукта. Как методолог с 20-летним стажем в андрагогике, при запуске этой программы вы должны держать в фокусе 4 ключевых аспекта:</p>
+
+			<!-- Принцип 1 -->
+			<div style="background:var(--cream);border:1px solid var(--sand);border-radius:var(--radius-sm);padding:22px 24px;margin-bottom:16px;">
+				<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+					<span style="background:var(--gold);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">1</span>
+					Пирамида Маслоу никто не отменял
+				</h3>
+				<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;color:var(--text-mid);margin-bottom:10px;"><strong>Физиология важнее нейробиологии.</strong> Взрослый человек не будет тренировать префронтальную кору, если у него замёрзли ноги или он хочет в туалет.</p>
+				<div class="risk-solution" style="margin:0;">
+					<p><strong>✅ Действие:</strong> Жёстко проинструктируйте гидов. Замедлять шаг, если есть отстающие. Следить за ветром (ставить группу спиной к ветру). Если группа замёрзла — безжалостно резать тайминг исторических справок и увеличивать время движения.</p>
+				</div>
+			</div>
+
+			<!-- Принцип 2 -->
+			<div style="background:var(--cream);border:1px solid var(--sand);border-radius:var(--radius-sm);padding:22px 24px;margin-bottom:16px;">
+				<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+					<span style="background:var(--gold);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">2</span>
+					Кривая когнитивной нагрузки (Cognitive Load Theory)
+				</h3>
+				<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;color:var(--text-mid);margin-bottom:10px;">Взрослый мозг не способен усвоить больше <strong>3-4 новых концептов за раз</strong>. У нас их много (Фракталы, Панорамное зрение, Матрица смыслов).</p>
+				<div class="risk-solution" style="margin:0;">
+					<p><strong>✅ Действие:</strong> В конце экскурсии (или в follow-up письме на следующий день) участникам необходимо выдать <strong>«Саммари-карточку»</strong> (в электронном виде или красивую бумажную закладку). Там должны быть тезисно описаны 3 главных упражнения, которые они забирают в жизнь («Панорама космонавта», «Фокус 3×3», «Метод Совы»). Без этого через 24 часа 80% информации забудется.</p>
+				</div>
+			</div>
+
+			<!-- Принцип 3 -->
+			<div style="background:var(--cream);border:1px solid var(--sand);border-radius:var(--radius-sm);padding:22px 24px;margin-bottom:16px;">
+				<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+					<span style="background:var(--gold);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">3</span>
+					Принцип «Обучение через опыт» (Цикл Колба)
+				</h3>
+				<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;color:var(--text-mid);margin-bottom:10px;">Взрослые не учатся через лекции. Они учатся через <strong>рефлексию своего опыта</strong>.</p>
+				<div class="risk-solution" style="margin:0;">
+					<p><strong>✅ Действие:</strong> В скрипте гида блоки «Шеринг» (Рефлексия) — это <strong>САМАЯ ВАЖНАЯ ЧАСТЬ</strong>. Гид может забыть исторический факт про Гагарина, это не страшно. Но если гид пропустит вопрос «Что вы сейчас почувствовали?» — тренинг превратится в обычную краеведческую прогулку. Убедитесь, что гиды умеют <strong>держать паузу и слушать людей</strong>.</p>
+				</div>
+			</div>
+
+			<!-- Принцип 4 -->
+			<div style="background:var(--cream);border:1px solid var(--sand);border-radius:var(--radius-sm);padding:22px 24px;margin-bottom:16px;">
+				<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+					<span style="background:var(--gold);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">4</span>
+					Экологичное управление сопротивлением
+				</h3>
+				<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.88rem;color:var(--text-mid);margin-bottom:10px;">Взрослые люди с высоким статусом (топ-менеджеры, бизнесмены) могут испытывать дискомфорт от простых инструкций («встаньте так, закройте глаза»). <strong>У них включается защита эго.</strong></p>
+				<div class="risk-solution" style="margin:0;">
+					<p><strong>✅ Действие:</strong> Использовать слова-маркеры взрослого партнёрства:</p>
+				</div>
+
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+					<div style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;padding:14px 16px;">
+						<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--red-soft);font-weight:600;margin-bottom:8px;">❌ Не говори</div>
+						<p style="font-size:0.84rem;margin:0;">«Делаем упражнение»<br>«Я вас научу»<br>«Уберите телефоны»</p>
+					</div>
+					<div style="background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;padding:14px 16px;">
+						<div style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.72rem;color:var(--green-soft);font-weight:600;margin-bottom:8px;">✅ Говори</div>
+						<p style="font-size:0.84rem;margin:0;">«Предлагаю мини-эксперимент»<br>«Давайте протестируем механику»<br>«Посмотрим, как это сработает на вас»</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="books">
+				<div class="books-label">📚 Рекомендованная литература для гида</div>
+				<div class="book-row"><span>📘</span><div><strong>Максим Дорофеев «Джедайские техники»</strong><br><span style="color:var(--text-mid);">Отлично объясняет, как работает префронтальная кора и почему мы отвлекаемся</span></div></div>
+				<div class="book-row"><span>📗</span><div><strong>Дэниел Гоулман «Фокус. О внимании, рассеянности и жизненном успехе»</strong><br><span style="color:var(--text-mid);">Главная книга про виды внимания</span></div></div>
+				<div class="book-row"><span>📙</span><div><strong>Марк Уильямс, Дэнни Пенман «Осознанность» (Mindfulness)</strong><br><span style="color:var(--text-mid);">Отсюда взяты механики упражнений на дыхание и фокус</span></div></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- ПЕЧАТНЫЕ МАТЕРИАЛЫ -->
+<!-- ======================== -->
+<section class="section fade-in" id="printables">
+	<div class="container">
+
+		<!-- ШПАРГАЛКА ДЛЯ ГИДА -->
+		<div class="print-card">
+			<div class="print-card-title">📋 Шпаргалка для гида</div>
+			<p style="text-align:center;font-family:'Segoe UI',Arial,sans-serif;font-size:0.84rem;color:var(--text-mid);margin-bottom:20px;">Андрагогика на маршруте · 4 закона уличного тренинга</p>
+
+			<div class="print-card-side">Лицевая сторона</div>
+
+			<div class="print-card-item">
+				<div class="print-card-num">1</div>
+				<div>
+					<strong>Тело важнее нейробиологии (Маслоу)</strong>
+					Взрослый не учится, если ему холодно или он устал.<br>
+					• Группа замёрзла? Режь историю, добавляй шаг.<br>
+					• Ветер? Ставь людей спиной к нему.<br>
+					• Темп задаёт самый медленный участник.
+				</div>
+			</div>
+
+			<div class="print-card-item">
+				<div class="print-card-num">2</div>
+				<div>
+					<strong>Фокус на главном (Когнитивная нагрузка)</strong>
+					Взрослый мозг усваивает максимум 3-4 концепта за раз.<br>
+					• Не перегружай фактами.<br>
+					• Одно место = ОДИН смысл = ОДНА практика.<br>
+					• В конце обязательно напомни 3 главных инструмента.
+				</div>
+			</div>
+
+			<div class="print-card-side">Оборотная сторона</div>
+
+			<div class="print-card-item">
+				<div class="print-card-num">3</div>
+				<div>
+					<strong>Опыт важнее лекции (Цикл Колба)</strong>
+					Люди учатся не когда ты говоришь, а когда они осознают свой опыт.<br>
+					• Блок «Шеринг» (рефлексия) — самая важная часть точки.<br>
+					• Задал вопрос — держи паузу 5-7 секунд. Не отвечай сам!<br>
+					• Принимай любой опыт (даже негативный).
+				</div>
+			</div>
+
+			<div class="print-card-item">
+				<div class="print-card-num">4</div>
+				<div>
+					<strong>Экология Эго (Партнёрство)</strong>
+					Взрослые люди со статусом не любят, когда их «учат жить». Снимай защиту эго правильными словами:<br>
+					❌ Не говори: «Делаем упражнение», «Я вас научу», «Уберите телефоны».<br>
+					✅ Говори: «Предлагаю мини-эксперимент», «Давайте протестируем механику», «Посмотрим, как это сработает на вас».
+				</div>
+			</div>
+
+			<div class="print-actions">
+				<button class="print-btn" onclick="printCard('guide-card')">🖨 Распечатать шпаргалку</button>
+			</div>
+		</div>
+
+		<!-- ЗАКЛАДКА ДЛЯ УЧАСТНИКОВ -->
+		<div class="print-card" id="bookmark-card">
+			<div class="print-card-title">📑 Закладка для участников</div>
+			<p style="text-align:center;font-family:'Segoe UI',Arial,sans-serif;font-size:0.84rem;color:var(--text-mid);margin-bottom:4px;">Сувенир-артефакт · Стильный картон с тиснением</p>
+			<p style="text-align:center;font-family:'Segoe UI',Arial,sans-serif;font-size:0.78rem;color:var(--text-light);margin-bottom:20px;">Эту закладку участники унесут в свои любимые книги</p>
+
+			<div class="print-card-side">Лицевая сторона</div>
+
+			<h3 style="text-align:center;color:var(--gold);font-size:1.15rem;margin-bottom:18px;">ВАШ ЗОЛОТОЙ ЛУЧ ВНИМАНИЯ</h3>
+			<p style="text-align:center;font-style:italic;color:var(--text-mid);font-size:0.92rem;margin-bottom:22px;">Как не превратить жизнь в белый шум</p>
+
+			<div class="print-card-item">
+				<div class="print-card-num">1</div>
+				<div>
+					<strong>Панорама Космонавта</strong>
+					<em style="color:var(--text-light);font-size:0.8rem;">(Снимает тревогу и туннельное зрение)</em><br>
+					• Зафиксируйте взгляд на одной точке прямо перед собой.<br>
+					• Не двигая зрачками, «растяните» внимание вправо и влево на 180°.<br>
+					• Заметьте, что происходит по краям.<br>
+					⏳ Держите 30 секунд. Дыхание замедлится.
+				</div>
+			</div>
+
+			<div class="print-card-item">
+				<div class="print-card-num">2</div>
+				<div>
+					<strong>Фокус-окно 3×3</strong>
+					<em style="color:var(--text-light);font-size:0.8rem;">(Помогает переключиться после работы)</em><br>
+					• Найдите 3 объекта на самом дальнем горизонте.<br>
+					• Услышьте 3 разных слоя звука вокруг.<br>
+					• Найдите 3 микро-детали (трещинка, узор) прямо перед собой.<br>
+					⏳ Вы сами решаете, что впускать в свой мозг.
+				</div>
+			</div>
+
+			<div class="print-card-side">Оборотная сторона</div>
+
+			<div class="print-card-item">
+				<div class="print-card-num">3</div>
+				<div>
+					<strong>Код Совы</strong>
+					<em style="color:var(--text-light);font-size:0.8rem;">(Как запоминать главное в потоке информации)</em><br>
+					Чтобы деталь не стала "осколком", наложите на неё структуру:<br>
+					• <strong>Форма:</strong> Какая геометрия?<br>
+					• <strong>Цвета:</strong> Три главных оттенка.<br>
+					• <strong>Аномалия:</strong> Что здесь странного/нелогичного?<br>
+					• <strong>Ассоциация:</strong> На что это похоже из бытовой жизни?<br>
+					⏳ Осмысленное остаётся навсегда.
+				</div>
+			</div>
+
+			<div class="quote" style="margin-top:24px;">
+				«Внимание — это точка, с которой вообще всё начинается.<br>Куда направлен ваш луч, там и ваша жизнь».
+			</div>
+
+			<div class="print-actions">
+				<button class="print-btn" onclick="printCard('bookmark-card')">🖨 Распечатать закладку</button>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+<!-- ======================== -->
+<!-- FOOTER -->
+<!-- ======================== -->
+<footer style="text-align:center;padding:48px 24px 36px;border-top:1px solid var(--sand);">
+	<div class="hero-icon" style="width:50px;height:50px;margin-bottom:16px;">
+		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="50" cy="50" r="44" stroke="#C4960A" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.3"/>
+			<circle cx="50" cy="50" r="8" fill="#C4960A" opacity="0.6"/>
+		</svg>
+	</div>
+	<p style="font-family:'Segoe UI',Arial,sans-serif;font-size:0.68rem;color:var(--text-light);letter-spacing:3px;text-transform:uppercase;">✦ Золотой Луч Внимания · Методическое руководство ✦</p>
+</footer>
+
+<!-- ======================== -->
+<!-- JAVASCRIPT -->
+<!-- ======================== -->
+<script>
+(function(){
+
+	// === SCROLL TO TOP ===
+	var stb = document.getElementById('scrollTop');
+	window.addEventListener('scroll', function(){
+		stb.classList.toggle('show', window.scrollY > 400);
+	});
+
+	// === TOC NAVIGATION ===
+	document.querySelectorAll('.toc-btn').forEach(function(btn){
+		btn.addEventListener('click', function(){
+			var target = document.getElementById(btn.getAttribute('data-sec'));
+			if(target) target.scrollIntoView({behavior:'smooth'});
+		});
+	});
+
+	// === TOC ACTIVE STATE ===
+	var sections = document.querySelectorAll('.section[id]');
+	var tocBtns = document.querySelectorAll('.toc-btn');
+	if('IntersectionObserver' in window){
+		var secObs = new IntersectionObserver(function(entries){
+			entries.forEach(function(e){
+				if(e.isIntersecting){
+					var id = e.target.id;
+					tocBtns.forEach(function(b){
+						b.classList.toggle('active', b.getAttribute('data-sec') === id);
+					});
+				}
+			});
+		}, {threshold: 0.15, rootMargin: '-80px 0px -50% 0px'});
+		sections.forEach(function(s){ secObs.observe(s); });
+	}
+
+	// === FADE IN ===
+	if('IntersectionObserver' in window){
+		var fadeObs = new IntersectionObserver(function(entries){
+			entries.forEach(function(e){
+				if(e.isIntersecting) e.target.classList.add('visible');
+			});
+		}, {threshold: 0.08, rootMargin: '0px 0px -40px 0px'});
+		document.querySelectorAll('.fade-in').forEach(function(el){ fadeObs.observe(el); });
+	}
+
+		// === TABS ===
+	document.querySelectorAll('.tabs').forEach(function(tabGroup){
+		var btns = tabGroup.querySelectorAll('.tab-btn');
+		btns.forEach(function(btn){
+			btn.addEventListener('click', function(){
+				var tabId = btn.getAttribute('data-tab');
+				var card = tabGroup.closest('.card');
+				// deactivate all
+				card.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+				card.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+				// activate clicked
+				btn.classList.add('active');
+				var panel = document.getElementById(tabId);
+				if(panel) panel.classList.add('active');
+			});
+		});
+	});
+
+		// === PRINT CARD ===
+	window.printCard = function(cardId){
+		var card = document.getElementById(cardId);
+		if(!card){
+			window.print();
+			return;
+		}
+		var printWin = window.open('','_blank','width=800,height=600');
+		if(!printWin) { window.print(); return; }
+		printWin.document.write('<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Печать</title>');
+		printWin.document.write('<style>');
+		printWin.document.write('*{box-sizing:border-box;margin:0;padding:0}');
+		printWin.document.write('body{font-family:Georgia,"Times New Roman",serif;color:#3A3226;line-height:1.8;padding:40px;max-width:700px;margin:0 auto}');
+		printWin.document.write('h3{font-family:"Segoe UI",Arial,sans-serif;font-size:1.1rem;color:#5C4A2A;margin:16px 0 8px}');
+		printWin.document.write('strong{color:#5C4A2A}');
+		printWin.document.write('em{color:#6B5D4D}');
+		printWin.document.write('.print-card{border:2px solid #C4960A;border-radius:12px;padding:32px 28px;position:relative;overflow:hidden}');
+		printWin.document.write('.print-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#C4960A,#D4A017,#C4960A)}');
+		printWin.document.write('.print-card-title{font-family:"Segoe UI",Arial,sans-serif;font-size:1.1rem;color:#C4960A;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px;text-align:center}');
+		printWin.document.write('.print-card-side{font-family:"Segoe UI",Arial,sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:#9B8E7E;margin:20px 0 12px;padding-top:16px;border-top:1px dashed #E8DDD0}');
+		printWin.document.write('.print-card-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;font-family:"Segoe UI",Arial,sans-serif;font-size:0.88rem;line-height:1.6}');
+		printWin.document.write('.print-card-num{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:rgba(196,150,10,0.1);border:1px solid rgba(196,150,10,0.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;color:#C4960A}');
+		printWin.document.write('.quote{background:rgba(196,150,10,0.1);border:1px solid rgba(196,150,10,0.25);border-radius:10px;padding:24px 28px;margin:18px 0;font-style:italic;font-size:1.02rem;color:#5C4A2A;text-align:center}');
+		printWin.document.write('.print-actions{display:none}');
+		printWin.document.write('p{margin-bottom:10px}');
+		printWin.document.write('@media print{body{padding:20px}}');
+		printWin.document.write('</style></head><body>');
+		printWin.document.write(card.outerHTML);
+		printWin.document.write('</body></html>');
+		printWin.document.close();
+		setTimeout(function(){
+			printWin.focus();
+			printWin.print();
+		}, 400);
+	};
+
+	// === SMOOTH ANCHOR LINKS ===
+	document.querySelectorAll('a[href^="#"]').forEach(function(link){
+		link.addEventListener('click', function(e){
+			e.preventDefault();
+			var target = document.getElementById(link.getAttribute('href').slice(1));
+			if(target) target.scrollIntoView({behavior:'smooth'});
+		});
+	});
+
+	// === KEYBOARD SHORTCUTS ===
+	document.addEventListener('keydown', function(e){
+		// Press Home to scroll to top
+		if(e.key === 'Home'){
+			e.preventDefault();
+			window.scrollTo({top:0, behavior:'smooth'});
+		}
+		// Press End to scroll to bottom
+		if(e.key === 'End'){
+			e.preventDefault();
+			window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+		}
+	});
+
+})();
+</script>
+</body>
+</html>
